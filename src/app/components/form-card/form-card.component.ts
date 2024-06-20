@@ -7,7 +7,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { Observable, map } from 'rxjs';
+import { Observable, map, startWith } from 'rxjs';
 import { Country } from '../../shared/enum/country';
 import { ReactiveFormCard } from '../../types/form-card.type';
 
@@ -34,7 +34,6 @@ export class FormCardComponent implements OnInit {
   })
 
   filteredCountriedForSelection$: Observable<Country[]> = new Observable();
-
   minDate: Date = new Date();
 
   private countriesForSelection: Country[] = [];
@@ -44,18 +43,26 @@ export class FormCardComponent implements OnInit {
     this.subscribeOnCountryChange();
   }
 
+  onBlurCountry(): void {
+    const currentValue = this.form.controls.country.value;
+    const isValid = this.countriesForSelection.some(country => country.toLowerCase() === currentValue.toLowerCase());
+
+    if (!isValid) {
+      this.form.controls.country.setValue('', { emitEvent: false });
+    }
+  }
+
   private fillCountriesForSelection(): void {
     this.countriesForSelection = Object.values(Country);
-
   }
 
   private subscribeOnCountryChange(): void {
     this.filteredCountriedForSelection$ = this.form.controls.country.valueChanges.pipe(
+      startWith(''),
       map(value => value.toLowerCase().trim()),
       map(value =>
         this.countriesForSelection.filter((country: Country) =>
           country.toLowerCase().includes(value))
       ))
   }
-
 }
