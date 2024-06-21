@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormCardComponent } from '../../components/form-card/form-card.component';
 
 @Component({
@@ -6,7 +6,8 @@ import { FormCardComponent } from '../../components/form-card/form-card.componen
   standalone: true,
   imports: [FormCardComponent],
   templateUrl: './forms-list.component.html',
-  styleUrl: './forms-list.component.scss'
+  styleUrl: './forms-list.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormsListComponent {
 }
