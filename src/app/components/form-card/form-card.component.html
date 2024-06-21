@@ -24,13 +24,14 @@
         matInput
         formControlName="userName"
       />
+        @if (form.controls.userName.hasError('invalidUserName')) {
+          <div> {{form.controls.userName.hasError('invalidUserName')}} </div>
+        }
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="example-full-width">
       <mat-label>Birthday</mat-label>
-      <mat-label>Choose a date</mat-label>
       <input matInput [min]="minDate" [matDatepicker]="picker" />
-      <mat-hint>MM/DD/YYYY</mat-hint>
       <mat-datepicker-toggle
         matIconSuffix
         [for]="picker"

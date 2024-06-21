@@ -1,6 +1,6 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCardModule } from '@angular/material/card';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -8,8 +8,10 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { Observable, map, startWith } from 'rxjs';
+import { UserService } from '../../services/user.service';
 import { Country } from '../../shared/enum/country';
 import { ReactiveFormCard } from '../../types/form-card.type';
+import { userNameValidator } from '../../validators/user-name.validator';
 
 @Component({
   selector: 'app-form-card',
@@ -22,23 +24,23 @@ import { ReactiveFormCard } from '../../types/form-card.type';
     MatNativeDateModule,
     MatSelectModule,
     AsyncPipe,
-    MatAutocompleteModule],
+    MatAutocompleteModule,
+  ],
   templateUrl: './form-card.component.html',
-  styleUrl: './form-card.component.scss'
+  styleUrl: './form-card.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormCardComponent implements OnInit {
-  form: FormGroup<ReactiveFormCard> = new FormGroup<ReactiveFormCard>({
-    country: new FormControl<Country | ''>('', { nonNullable: true }),
-    userName: new FormControl<string>('', { nonNullable: true }),
-    birthday: new FormControl<Date>(new Date(), { nonNullable: true }),
-  })
+  form!: FormGroup<ReactiveFormCard>;
 
   filteredCountriedForSelection$: Observable<Country[]> = new Observable();
   minDate: Date = new Date();
 
   private countriesForSelection: Country[] = [];
+  private userService: UserService = inject(UserService);
 
   ngOnInit(): void {
+    this.initForm();
     this.fillCountriesForSelection();
     this.subscribeOnCountryChange();
   }
@@ -50,6 +52,27 @@ export class FormCardComponent implements OnInit {
     if (!isValid) {
       this.form.controls.country.setValue('', { emitEvent: false });
     }
+  }
+
+  private initForm(): void {
+    this.form = new FormGroup<ReactiveFormCard>({
+      country: new FormControl<Country | ''>(
+        '',
+        {
+          nonNullable: true,
+          validators: [Validators.required]
+        },
+      ),
+      userName: new FormControl<string>('', {
+        nonNullable: true,
+        validators: [Validators.required],
+        asyncValidators: [userNameValidator(this.userService, 1500)]
+      }),
+      birthday: new FormControl<Date>(new Date(), {
+        nonNullable: true,
+        validators: [Validators.required],
+      }),
+    })
   }
 
   private fillCountriesForSelection(): void {
