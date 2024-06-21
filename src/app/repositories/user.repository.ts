@@ -12,8 +12,8 @@ export class UserRepository {
 
   private apiService: ApiService = inject(ApiService);
 
-  checkUserName(userName: string): Observable<boolean> {
-    return this.apiService.post<IsAvailable>(`${this.url}/checkUsername`, { userName }).pipe(
+  checkUserName(username: string): Observable<boolean> {
+    return this.apiService.post<IsAvailable>(`${this.url}/checkUsername`, { username }).pipe(
       map(result => result.isAvailable)
     );
   }
