@@ -1,1 +1,42 @@
-<p>form-card works!</p>
+<mat-card appearance="outlined" class="form-card">
+  <form [formGroup]="form" class="form">
+    <mat-form-field appearance="outline" class="example-full-width">
+      <mat-label>Country</mat-label>
+      <input
+        appearance="outlined"
+        type="text"
+        matInput
+        formControlName="country"
+        [matAutocomplete]="auto"
+        (blur)="onBlurCountry()"
+      />
+      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+        @for (country of filteredCountriedForSelection$ | async; track country)
+        { <mat-option [value]="country">{{ country }}</mat-option> }
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="example-full-width">
+      <mat-label>User Name</mat-label>
+      <input
+        appearance="outlined"
+        type="text"
+        matInput
+        formControlName="userName"
+      />
+        @if (form.controls.userName.hasError('invalidUserName')) {
+          <div> {{form.controls.userName.hasError('invalidUserName')}} </div>
+        }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="example-full-width">
+      <mat-label>Birthday</mat-label>
+      <input matInput [min]="minDate" [matDatepicker]="picker" />
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="picker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </form>
+</mat-card>
