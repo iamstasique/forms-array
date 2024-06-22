@@ -1,0 +1,4 @@
+@for(formCard of formsList$ | async; track $index) {
+  <app-form-card [formCard]="formCard" />
+}
+
