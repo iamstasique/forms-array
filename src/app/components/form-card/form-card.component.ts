@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCardModule } from '@angular/material/card';
@@ -10,7 +10,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { Observable, map, startWith } from 'rxjs';
 import { UserService } from '../../services/user.service';
 import { Country } from '../../shared/enum/country';
-import { ReactiveFormCard } from '../../types/form-card.type';
+import { FormCard, ReactiveFormCard } from '../../types/form-card.type';
 import { userNameValidator } from '../../validators/user-name.validator';
 
 @Component({
@@ -30,8 +30,10 @@ import { userNameValidator } from '../../validators/user-name.validator';
   styleUrl: './form-card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FormCardComponent implements OnInit {
-  form!: FormGroup<ReactiveFormCard>;
+export class FormCardComponent implements OnInit, OnChanges {
+  @Input({ required: true }) formCard!: FormCard;
+
+  formGroup!: FormGroup<ReactiveFormCard>;
 
   filteredCountriedForSelection$: Observable<Country[]> = new Observable();
   minDate: Date = new Date();
@@ -40,35 +42,42 @@ export class FormCardComponent implements OnInit {
   private userService: UserService = inject(UserService);
 
   ngOnInit(): void {
-    this.initForm();
     this.fillCountriesForSelection();
     this.subscribeOnCountryChange();
   }
 
-  onBlurCountry(): void {
-    const currentValue = this.form.controls.country.value;
-    const isValid = this.countriesForSelection.some(country => country.toLowerCase() === currentValue.toLowerCase());
+  ngOnChanges(changes: SimpleChanges): void {
+    const formCard: FormCard = changes.formCard?.currentValue;
 
-    if (!isValid) {
-      this.form.controls.country.setValue('', { emitEvent: false });
+    if (formCard) {
+      this.initForm(formCard);
     }
   }
 
-  private initForm(): void {
-    this.form = new FormGroup<ReactiveFormCard>({
+  onBlurCountry(): void {
+    const currentValue = this.formGroup.controls.country.value;
+    const isValid = this.countriesForSelection.some(country => country.toLowerCase() === currentValue.toLowerCase());
+
+    if (!isValid) {
+      this.formGroup.controls.country.setValue('', { emitEvent: false });
+    }
+  }
+
+  private initForm(formCard: FormCard): void {
+    this.formGroup = new FormGroup<ReactiveFormCard>({
       country: new FormControl<Country | ''>(
-        '',
+        formCard.country,
         {
           nonNullable: true,
           validators: [Validators.required]
         },
       ),
-      userName: new FormControl<string>('', {
+      userName: new FormControl<string>(formCard.userName, {
         nonNullable: true,
         validators: [Validators.required],
         asyncValidators: [userNameValidator(this.userService, 1500)]
       }),
-      birthday: new FormControl<Date>(new Date(), {
+      birthday: new FormControl<Date>(formCard.birthday, {
         nonNullable: true,
         validators: [Validators.required],
       }),
@@ -80,7 +89,7 @@ export class FormCardComponent implements OnInit {
   }
 
   private subscribeOnCountryChange(): void {
-    this.filteredCountriedForSelection$ = this.form.controls.country.valueChanges.pipe(
+    this.filteredCountriedForSelection$ = this.formGroup.controls.country.valueChanges.pipe(
       startWith(''),
       map(value => value.toLowerCase().trim()),
       map(value =>
