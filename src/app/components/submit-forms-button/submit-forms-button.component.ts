@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, DestroyRef, EventEmitter, Output, i
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { BehaviorSubject, Observable, Subject, map, takeUntil, timer } from 'rxjs';
+import { FormsService } from '../../services/forms.service';
 
 @Component({
   selector: 'app-submit-forms-button',
@@ -22,6 +23,7 @@ export class SubmitFormsButtonComponent {
   private timer$!: Observable<number>;
   private cancelTimerSubject: Subject<void> = new Subject<void>();
   private destroyRef: DestroyRef = inject(DestroyRef);
+  private formsService: FormsService = inject(FormsService);
 
   getResultTimerValue(seconds: number): string {
     return `0:${seconds < 10 ? '0' + seconds : seconds}`;
@@ -29,6 +31,7 @@ export class SubmitFormsButtonComponent {
 
   submitAllForms(): void {
     this.isTimerActive = true;
+    this.formsService.disableAllForms();
 
     this.timer$ = timer(1000, 1000).pipe(
       map(() => {
@@ -55,6 +58,7 @@ export class SubmitFormsButtonComponent {
 
   reset(): void {
     this.isTimerActive = false;
+    this.formsService.enableAllForms();
     this.secondsLeftSubject.next(this.initialTimerValue);
     this.cancelTimerSubject.next();
   }

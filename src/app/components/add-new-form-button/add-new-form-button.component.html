@@ -1,5 +1,5 @@
 <mat-card appearance="outlined" class="form-card">
-  <button color="primary" mat-fab aria-label="Add new form" (click)="onAddNewForm()">
+  <button [disabled]="disabled" color="primary" mat-fab aria-label="Add new form" (click)="onAddNewForm()">
     <mat-icon>add</mat-icon>
   </button>
   <p class="form-card-text">Add new Form</p>
