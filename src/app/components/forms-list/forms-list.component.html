@@ -1,4 +1,8 @@
-@for(formCard of formsList$ | async; track $index) {
-  <app-form-card [formCard]="formCard" />
-}
+<div class="forms-list">
+  <app-add-new-form-button (onAddForm)="onAddForm()"/>
+  @for(formCard of formsList$ | async; track $index) {
+    <app-form-card [formCard]="formCard" />
+  }
+</div>
+
 

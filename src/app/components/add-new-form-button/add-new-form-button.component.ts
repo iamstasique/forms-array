@@ -1,9 +1,7 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon'
-import { FormsService } from '../../services/forms.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-add-new-form-button',
@@ -14,21 +12,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddNewFormButtonComponent {
-  private formsService: FormsService = inject(FormsService);
-  private snackBar: MatSnackBar = inject(MatSnackBar);
+  @Output() onAddForm: EventEmitter<void> = new EventEmitter<void>();
 
   onAddNewForm(): void {
-    const added = this.formsService.addExtraForm();
-
-    this.snackBar.open(
-      added ? 'Form added successfully' : 'You already have 10 forms',
-      'OK',
-      {
-        duration: 2000,
-        horizontalPosition: 'center',
-        verticalPosition: 'top',
-        panelClass: [added ? 'snackbar-blue' : 'snackbar-red']
-      }
-    );
+    this.onAddForm.emit();
   }
 }

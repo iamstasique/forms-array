@@ -5,20 +5,23 @@ import { Observable, first } from 'rxjs';
 import { FormCardComponent } from '../../components/form-card/form-card.component';
 import { FormsService } from '../../services/forms.service';
 import { FormCard } from '../../types/form-card.type';
+import { AddNewFormButtonComponent } from "../add-new-form-button/add-new-form-button.component";
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-forms-list',
   standalone: true,
-  imports: [FormCardComponent, AsyncPipe],
   templateUrl: './forms-list.component.html',
   styleUrl: './forms-list.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [FormCardComponent, AsyncPipe, AddNewFormButtonComponent]
 })
 export class FormsListComponent implements OnInit {
   formsList$!: Observable<FormCard[]>;
 
   private destroyRef: DestroyRef = inject(DestroyRef);
   private formsService: FormsService = inject(FormsService);
+  private snackBar: MatSnackBar = inject(MatSnackBar);
 
   ngOnInit(): void {
     this.getForms();
@@ -29,6 +32,21 @@ export class FormsListComponent implements OnInit {
       takeUntilDestroyed(this.destroyRef),
       first()
     ).subscribe();
+  }
+
+  onAddForm(): void {
+    const added: boolean = this.formsService.addExtraForm();
+
+    this.snackBar.open(
+      added ? 'Form added successfully' : 'You already have 10 forms',
+      'OK',
+      {
+        duration: 2000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+        panelClass: [added ? 'snackbar-blue' : 'snackbar-red']
+      }
+    );
   }
 
   private getForms(): void {
