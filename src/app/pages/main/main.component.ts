@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { first, tap } from 'rxjs';
 import { FormsListComponent } from '../../components/forms-list/forms-list.component';
+import { SubmitFormsButtonComponent } from "../../components/submit-forms-button/submit-forms-button.component";
 import { FormsService } from '../../services/forms.service';
 
 @Component({
@@ -11,15 +11,15 @@ import { FormsService } from '../../services/forms.service';
   standalone: true,
   templateUrl: './main.component.html',
   styleUrl: './main.component.scss',
-  imports: [FormsListComponent, MatButtonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [FormsListComponent, SubmitFormsButtonComponent]
 })
 export class MainComponent {
   private destroyRef: DestroyRef = inject(DestroyRef);
   private formsService: FormsService = inject(FormsService);
   private snackBar: MatSnackBar = inject(MatSnackBar);
 
-  submitAllForms(): void {
+  sendForms(): void {
     this.formsService.submitAllForms().pipe(
       takeUntilDestroyed(this.destroyRef),
       first(),
