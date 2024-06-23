@@ -1,0 +1,27 @@
+.form-card {
+  background-color: #b7bce1;
+  background: linear-gradient(90deg, rgb(95 95 255) 5%, #b7bce1 100%);
+
+  .form-card-text {
+    color: white;
+    margin-top: 10px;
+    
+    font-size: 18px;
+  }
+}
+
+::ng-deep {
+  .mat-mdc-snack-bar-container {
+    &.snackbar {
+      &-blue {
+        --mdc-snackbar-container-color: white;
+        --mdc-snackbar-supporting-text-color: blue;
+      }
+
+      &-red {
+        --mdc-snackbar-container-color: white;
+        --mdc-snackbar-supporting-text-color: red;
+      }
+    }
+  }
+}
