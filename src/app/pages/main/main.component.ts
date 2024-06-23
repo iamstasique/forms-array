@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
-import { FormsListComponent } from '../../components/forms-list/forms-list.component';
-import { MatButtonModule } from '@angular/material/button';
-import { FormsService } from '../../services/forms.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { first, tap } from 'rxjs';
+import { FormsListComponent } from '../../components/forms-list/forms-list.component';
+import { FormsService } from '../../services/forms.service';
 
 @Component({
   selector: 'app-main',
@@ -16,11 +17,23 @@ import { first, tap } from 'rxjs';
 export class MainComponent {
   private destroyRef: DestroyRef = inject(DestroyRef);
   private formsService: FormsService = inject(FormsService);
+  private snackBar: MatSnackBar = inject(MatSnackBar);
 
-  onSubmit(): void {
+  submitAllForms(): void {
     this.formsService.submitAllForms().pipe(
       takeUntilDestroyed(this.destroyRef),
       first(),
+      tap((result: boolean) =>
+        this.snackBar.open(
+          result ? 'Forms submitted successfully' : 'There was an error',
+          'OK',
+          {
+            duration: 2000,
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+            panelClass: [result ? 'snackbar-blue' : 'snackbar-red']
+          }
+        )),
     ).subscribe();
   }
 }
