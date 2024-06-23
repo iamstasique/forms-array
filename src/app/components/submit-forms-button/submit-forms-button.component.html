@@ -1,0 +1,15 @@
+@if (isTimerActive) {
+  <button
+    mat-stroked-button
+    color="warn"
+    (click)="reset()">
+     Cancel {{getResultTimerValue((secondsLeftSubject | async) ?? 0)}}
+  </button>
+} @else { 
+  <button
+    mat-stroked-button
+    color="primary"
+    (click)="submitAllForms()">
+      Submit all forms
+  </button>
+}

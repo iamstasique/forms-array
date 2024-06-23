@@ -1,11 +1,4 @@
 <div class="main">
-  <div class="main-submit">
-    <button
-      mat-stroked-button
-      color="primary"
-      (click)="submitAllForms()">
-        Submit all forms
-    </button>
-  </div>
+  <app-submit-forms-button (onSubmit)="sendForms()"/>
   <app-forms-list/>
 </div>
