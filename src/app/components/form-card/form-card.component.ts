@@ -27,7 +27,7 @@ import { userNameValidator } from '../../validators/user-name.validator';
     MatAutocompleteModule,
   ],
   templateUrl: './form-card.component.html',
-  styleUrl: './form-card.component.scss',
+  styleUrl: '../../../styles/form-card.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormCardComponent implements OnInit, OnChanges {

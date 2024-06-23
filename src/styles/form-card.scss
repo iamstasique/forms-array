@@ -1,6 +1,10 @@
 .form-card {
   width: 300px;
-  display: flex;
+  min-height: 316px;
+
+  display: flex;    
+  align-items: center;
+  justify-content: center;
 
   .form {
     flex: 1;
