@@ -1,5 +1,5 @@
 <mat-card appearance="outlined" class="form-card">
-  <form [formGroup]="form" class="form">
+  <form [formGroup]="formGroup" class="form">
     <mat-form-field appearance="outline" class="example-full-width">
       <mat-label>Country</mat-label>
       <input
@@ -24,8 +24,8 @@
         matInput
         formControlName="userName"
       />
-        @if (form.controls.userName.hasError('invalidUserName')) {
-          <div> {{form.controls.userName.hasError('invalidUserName')}} </div>
+        @if (formGroup.controls.userName.hasError('invalidUserName')) {
+          <div> {{formGroup.controls.userName.hasError('invalidUserName')}} </div>
         }
     </mat-form-field>
 
