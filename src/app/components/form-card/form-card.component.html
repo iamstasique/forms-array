@@ -31,8 +31,9 @@
 
     <mat-form-field appearance="outline" class="example-full-width">
       <mat-label>Birthday</mat-label>
-      <input matInput [min]="minDate" [matDatepicker]="picker" />
+      <input [disabled]="formGroup.controls.birthday.disabled" matInput [min]="minDate" [matDatepicker]="picker" />
       <mat-datepicker-toggle
+        [disabled]="formGroup.controls.birthday.disabled"
         matIconSuffix
         [for]="picker"
       ></mat-datepicker-toggle>

@@ -1,10 +1,10 @@
 import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { FormArray, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Observable } from 'rxjs';
 import { FormCardComponent } from '../../components/form-card/form-card.component';
 import { FormsService } from '../../services/forms.service';
-import { FormCard } from '../../types/form-card.type';
+import { ReactiveFormCard } from '../../types/form-card.type';
 import { AddNewFormButtonComponent } from "../add-new-form-button/add-new-form-button.component";
 
 @Component({
@@ -16,7 +16,7 @@ import { AddNewFormButtonComponent } from "../add-new-form-button/add-new-form-b
   imports: [FormCardComponent, AsyncPipe, AddNewFormButtonComponent]
 })
 export class FormsListComponent implements OnInit {
-  formsList$!: Observable<FormCard[]>;
+  forms!: FormArray<FormGroup<ReactiveFormCard>>;
 
   private formsService: FormsService = inject(FormsService);
   private snackBar: MatSnackBar = inject(MatSnackBar);
@@ -41,6 +41,6 @@ export class FormsListComponent implements OnInit {
   }
 
   private getForms(): void {
-    this.formsList$ = this.formsService.formsList$;
+    this.forms = this.formsService.formArray;
   }
 }
