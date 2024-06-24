@@ -36,4 +36,8 @@ export class MainComponent {
         )),
     ).subscribe();
   }
+
+  get isFormArrayInvalid(): boolean {
+    return this.formsService.isFormArrayInvalid;
+  }
 }

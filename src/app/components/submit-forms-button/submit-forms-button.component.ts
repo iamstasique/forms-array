@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, DestroyRef, EventEmitter, Output, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, EventEmitter, Input, Output, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { BehaviorSubject, Observable, Subject, map, takeUntil, timer } from 'rxjs';
@@ -13,6 +13,7 @@ import { FormsService } from '../../services/forms.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SubmitFormsButtonComponent {
+  @Input({ required: true }) disabled: boolean = false;
   @Output() onSubmit: EventEmitter<void> = new EventEmitter<void>();
 
   readonly initialTimerValue: number = 15;

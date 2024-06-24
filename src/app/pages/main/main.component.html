@@ -1,4 +1,4 @@
 <div class="main">
-  <app-submit-forms-button (onSubmit)="sendForms()"/>
+  <app-submit-forms-button [disabled]="isFormArrayInvalid" (onSubmit)="sendForms()"/>
   <app-forms-list/>
 </div>

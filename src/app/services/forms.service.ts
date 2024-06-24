@@ -20,6 +20,10 @@ export class FormsService {
     this.formArray.push(this.getNewForm());
   }
 
+  get isFormArrayInvalid(): boolean {
+    return this.formArray.invalid || this.formArray.pending
+  }
+
   addExtraForm(): boolean {
     if (this.formArray.length === 10) {
       return false;
@@ -59,7 +63,7 @@ export class FormsService {
         validators: [Validators.required],
         asyncValidators: [userNameValidator(this.userService, 1500)]
       }),
-      birthday: new FormControl<Date>(new Date(), {
+      birthday: new FormControl<Date | null>(null, {
         nonNullable: true,
         validators: [Validators.required],
       }),

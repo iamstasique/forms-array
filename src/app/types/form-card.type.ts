@@ -4,7 +4,7 @@ import { Country } from '../shared/enum/country'
 export type FormCard = {
   country: Country | '',
   userName: string,
-  birthday: Date
+  birthday: Date | null,
 }
 
 export type ReactiveFormCard = {

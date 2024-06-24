@@ -7,6 +7,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
 import { MainComponent } from "./pages/main/main.component";
 import { MockBackendInterceptor } from "./shared/mock-backend/mock-backend.interceptor";
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,7 +21,8 @@ import { MockBackendInterceptor } from "./shared/mock-backend/mock-backend.inter
     BrowserModule,
     RouterOutlet,
     NgbModule,
-    MainComponent
+    MainComponent,
+    MatTooltipModule
   ]
 })
 export class AppModule { }
