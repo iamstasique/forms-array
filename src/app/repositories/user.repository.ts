@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { ApiService } from '../services/api.service';
-import { IsAvailable } from '../types/is-available.type';
+import { IsAvailable } from '../shared/types/is-available.type';
 
 @Injectable({
   providedIn: 'root'

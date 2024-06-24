@@ -3,8 +3,8 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable, of, tap } from 'rxjs';
 import { FormsRepository } from '../repositories/forms.repository';
 import { Country } from '../shared/enum/country';
-import { ReactiveFormCard } from '../types/form-card.type';
-import { userNameValidator } from '../validators/user-name.validator';
+import { ReactiveFormCard } from '../shared/types/form-card.type';
+import { userNameValidator } from '../shared/validators/user-name.validator';
 import { UserService } from './user.service';
 
 @Injectable({

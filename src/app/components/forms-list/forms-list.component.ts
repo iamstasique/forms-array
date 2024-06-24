@@ -4,7 +4,7 @@ import { FormArray, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormCardComponent } from '../../components/form-card/form-card.component';
 import { FormsService } from '../../services/forms.service';
-import { ReactiveFormCard } from '../../types/form-card.type';
+import { ReactiveFormCard } from '../../shared/types/form-card.type';
 import { AddNewFormButtonComponent } from "../add-new-form-button/add-new-form-button.component";
 
 @Component({

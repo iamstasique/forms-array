@@ -8,9 +8,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { Observable, map, startWith } from 'rxjs';
+import { ValidationTooltipDirective } from '../../shared/directives/validation-tooltip.directive';
 import { Country } from '../../shared/enum/country';
-import { ReactiveFormCard } from '../../types/form-card.type';
-import { ValidationTooltipDirective } from '../../directives/validation-tooltip.directive';
+import { ReactiveFormCard } from '../../shared/types/form-card.type';
 
 @Component({
   selector: 'app-form-card',

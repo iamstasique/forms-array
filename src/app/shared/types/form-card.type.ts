@@ -1,5 +1,5 @@
 import { FormControl } from '@angular/forms'
-import { Country } from '../shared/enum/country'
+import { Country } from '../enum/country'
 
 export type FormCard = {
   country: Country | '',

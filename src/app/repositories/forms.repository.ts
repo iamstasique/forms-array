@@ -1,8 +1,8 @@
 import { Injectable, inject } from '@angular/core';
-import { ApiService } from '../services/api.service';
 import { Observable, catchError, map, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { FormCard } from '../types/form-card.type';
+import { ApiService } from '../services/api.service';
+import { FormCard } from '../shared/types/form-card.type';
 
 @Injectable({
   providedIn: 'root'
