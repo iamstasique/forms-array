@@ -8,7 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
   standalone: true,
   imports: [MatCardModule, MatButtonModule, MatIconModule],
   templateUrl: './add-new-form-button.component.html',
-  styleUrls: ['./add-new-form-button.component.scss', '../../../styles/form-card.scss'],
+  styleUrls: ['./add-new-form-button.component.scss', '../../../styles/form.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddNewFormButtonComponent {
