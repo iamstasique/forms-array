@@ -6,11 +6,14 @@
      Cancel {{getResultTimerValue((secondsLeftSubject | async) ?? 0)}}
   </button>
 } @else { 
-  <button
-    mat-stroked-button
-    color="primary"
-    [disabled]="disabled"
-    (click)="submitAllForms()">
-      Submit all forms
-  </button>
+  <div style="width: fit-content" [matTooltip]="(tooltipText$ | async) ?? ''" [matTooltipDisabled]="disabled === false">
+    <button
+      mat-stroked-button
+      color="primary"
+      [disabled]="disabled"
+      (click)="submitAllForms()"
+    >
+        {{submitText$ | async}}
+    </button>
+  </div>
 }
