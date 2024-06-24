@@ -10,6 +10,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { Observable, map, startWith } from 'rxjs';
 import { Country } from '../../shared/enum/country';
 import { ReactiveFormCard } from '../../types/form-card.type';
+import { ValidationTooltipDirective } from '../../directives/validation-tooltip.directive';
 
 @Component({
   selector: 'app-form-card',
@@ -23,9 +24,10 @@ import { ReactiveFormCard } from '../../types/form-card.type';
     MatSelectModule,
     AsyncPipe,
     MatAutocompleteModule,
+    ValidationTooltipDirective
   ],
   templateUrl: './form-card.component.html',
-  styleUrl: '../../../styles/form-card.scss',
+  styleUrl: '../../../styles/form.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormCardComponent implements OnInit {
@@ -46,8 +48,11 @@ export class FormCardComponent implements OnInit {
     const isValid = this.countriesForSelection.some(country => country.toLowerCase() === currentValue.toLowerCase());
 
     if (!isValid) {
-      this.formGroup.controls.country.setValue('', { emitEvent: false });
+      this.formGroup.controls.country.setErrors(['invalid-country']);
+      return;
     }
+
+    this.formGroup.controls.country.setErrors(null);
   }
 
   private fillCountriesForSelection(): void {

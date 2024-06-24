@@ -1,37 +1,46 @@
-<mat-card appearance="outlined" class="form-card">
+ <mat-card appearance="outlined" class="form-card">
   <form [formGroup]="formGroup" class="form">
-    <mat-form-field appearance="outline" class="example-full-width">
+    <mat-form-field style="position: relative;" appearance="outline" class="example-full-width">
       <mat-label>Country</mat-label>
       <input
         appearance="outlined"
         type="text"
         matInput
-        formControlName="country"
         [matAutocomplete]="auto"
         (blur)="onBlurCountry()"
-      />
+        formControlName="country"
+        appValidationTooltip
+        [fieldForValidation]="'country'"
+        />
       <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
         @for (country of filteredCountriedForSelection$ | async; track country)
         { <mat-option [value]="country">{{ country }}</mat-option> }
       </mat-autocomplete>
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="example-full-width">
+    <mat-form-field style="position: relative;" appearance="outline" class="example-full-width">
       <mat-label>User Name</mat-label>
       <input
         appearance="outlined"
         type="text"
         matInput
         formControlName="userName"
+        appValidationTooltip
+        [fieldForValidation]="'userName'"
       />
-        @if (formGroup.controls.userName.hasError('invalidUserName')) {
-          <div> {{formGroup.controls.userName.hasError('invalidUserName')}} </div>
-        }
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="example-full-width">
+    <mat-form-field style="position: relative;" appearance="outline" class="example-full-width">
       <mat-label>Birthday</mat-label>
-      <input [disabled]="formGroup.controls.birthday.disabled" matInput [min]="minDate" [matDatepicker]="picker" />
+      <input
+        [disabled]="formGroup.controls.birthday.disabled"
+        matInput
+        [min]="minDate"
+        [matDatepicker]="picker" 
+        formControlName="birthday"
+        appValidationTooltip
+        [fieldForValidation]="'birthday'"
+      />
       <mat-datepicker-toggle
         [disabled]="formGroup.controls.birthday.disabled"
         matIconSuffix

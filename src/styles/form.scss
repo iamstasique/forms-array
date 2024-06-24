@@ -14,4 +14,12 @@
 
     margin: 20px;
   }
+  
+  .with-error {
+    position: absolute;
+    bottom: 0;
+  
+    color: red;
+    font-size: 12px;
+  }
 }
