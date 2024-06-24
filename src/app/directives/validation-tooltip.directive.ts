@@ -31,9 +31,9 @@ export class ValidationTooltipDirective implements OnInit {
 
   private setErrorMessage(): void {
     const normalizedFieldsNames = {
-      country: 'country',
-      userName: 'user name',
-      birthday: 'birthday'
+      country: 'Country',
+      userName: 'User name',
+      birthday: 'Birthday'
     };
 
     this.tooltip.message = `Please provide a correct ${normalizedFieldsNames[this.fieldForValidation]}`;

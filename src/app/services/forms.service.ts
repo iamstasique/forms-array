@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable, of } from 'rxjs';
+import { Observable, of, tap } from 'rxjs';
 import { FormsRepository } from '../repositories/forms.repository';
 import { Country } from '../shared/enum/country';
 import { ReactiveFormCard } from '../types/form-card.type';
@@ -46,7 +46,14 @@ export class FormsService {
       return of(false);
     }
 
-    return this.formsRepository.submitAllForms(this.formArray.getRawValue());
+    return this.formsRepository.submitAllForms(this.formArray.getRawValue()).pipe(
+      tap((result: boolean) => {
+        if (result) {
+          this.formArray.clear();
+          this.formArray.push(this.getNewForm());
+        }
+      })
+    );
   }
 
   private getNewForm(): FormGroup<ReactiveFormCard> {
